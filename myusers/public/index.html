@@ -1,0 +1,66 @@
+<!-- index.html -->
+<!DOCTYPE html>
+
+<html ng-app='myUsers'>
+<head>
+
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <title>Codefellows Users App</title>
+
+  <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+  <style>
+  	html 			{ overflow-y:scroll; }
+  	body 			{ padding-top: 50px; }
+  	#users-list		{ margin-bottom: 30px; }
+  </style>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js'></script>
+  <script src='core.js'></script>
+</head>
+
+<body ng-controller='mainController'>
+  <div class='container'>
+
+    <div class='jumbotron text-center'>
+      <h1>MyUsers <span class='label label-info'>{{ users.length }}</span></h1>
+    </div>
+    <!-- user creation form -->
+    <div id='user-form' class='row'>
+      <div class='col-sm-8 col-sm-offset-2 text-center'>
+        <form class='well'>
+          <legend>Enter info to create a new user!</legend>
+          <div class='form-group'>
+            <input type='text' class='form-control input-lg text-center' placeholder='email@example.com' ng-model='formData.email'>
+            <input type='text' class='form-control input-lg text-center' placeholder='first name' ng-model='formData.first_name'>
+            <input type='text' class='form-control input-lg text-center' placeholder='last name' ng-model='formData.last_name'>
+          </div>
+          <button type='submit' class='btn btn-primary btn-block' ng-click='createUser()'>Add</button>
+        </form>
+      </div>
+    </div>
+    <div class='container well text-center'>
+    
+      <legend>Current users</legend>
+      
+        
+
+        <!-- loop over all users in scope -->
+        <div class='checkbox' ng-repeat='user in users'>
+          <div id='users-list' class='row'>
+            <div class='col-sm-3 col-sm-offset-3'>
+              <p>{{user.first_name}} {{user.last_name}} ({{user.email}})</p>
+            </div>
+            <div class='col-sm-3 col-sm-offset-1'>
+              <input type='checkbox' ng-click='deleteUser(user._id)'>Delete?
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>
