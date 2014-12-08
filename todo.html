@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+
+    <!-- CSS (bootstrap 3) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    
+  </head>
+  <body>
+  	<div class='container'>
+  	<div class='col-sm-4 col-sm-offset-3'>
+  	  <center>
+  	    <h1>TODO</h1>
+  	    <ol id="todo-list"></ol>
+
+  	    <form id='add-item' >
+  	      <input type='text' class='form-control' id='newtask' required autofocus placeholder="type a new task" autocomplete='off'/>
+  	      <input class='btn btn-primary btn-block' type='submit' id='button' value='add'/>
+  	    </form>
+  	  </center>
+  	</div>
+  	</div>
+  	
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      //action when form is submitted
+      $("#add-item").on("submit", function(e) {
+        e.preventDefault();
+  	    var newtask = $("<li class='list-item'>"+$('#newtask').val()+"</li>");
+  	    newtask.click(function() {
+  	    	$(this).remove()
+  	    });
+  	
+  	    $("#todo-list").prepend(newtask);
+  	    $('#newtask').val('');
+        $('#newtask').focus();
+      });
+    });
+  </script>
+
+  </body>
+
+</html>
