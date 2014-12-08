@@ -76,6 +76,25 @@ app.post('/api/users', function(req, res) {
 		});
 	});
 });
+// update a user
+app.post('/api/users/:user_id', function(req, res) {
+	User.update({
+		_id : req.params.user_id,
+		first_name 	: req.body.first_name,
+		last_name  	: req.body.last_name,
+		email		: req.body.email
+	}, function(err, user) {
+		if(err)
+			res.send(err);
+
+		// get and return all users after making the update
+		User.find(function(err, users) {
+			if(err)
+				res.send(err)
+			res.json(users);
+		});
+	});
+});
 
 // delete a user
 app.delete('/api/users/:user_id', function(req, res) {

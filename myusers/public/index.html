@@ -10,11 +10,13 @@
   <title>Codefellows Users App</title>
 
   <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+  
   <style>
   	html 			{ overflow-y:scroll; }
-  	body 			{ padding-top: 50px; }
-  	#users-list		{ margin-bottom: 30px; }
+ 	body 			{ padding-top: 50px; }
+  	.users-list		{ margin-bottom: 30px; }
   </style>
+  
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js'></script>
@@ -25,42 +27,87 @@
   <div class='container'>
 
     <div class='jumbotron text-center'>
-      <h1>MyUsers <span class='label label-info'>{{ users.length }}</span></h1>
+      <h1>MyUsers</h1>
+      <p><em>fulfill all of your CRUDdy desires...</em></p>
+    </div>
+    <div class='row'>
+    <div class='col-sm-8 col-sm-offset-3 text-center'>
+      <ul class="nav nav-pills text-center" role="tablist">
+        <li role="presentation" ng-class='cuclass' ng-click="changeTab('cutab')"><a href="#">Create User</a></li>
+        <li role="presentation" ng-class='slclass' ng-click="changeTab('sltab')"><a href="#">Show User List <span class="badge">{{ users.length }}</span></a></li>
+        <li id='sftab' role="presentation" ng-class='sfclass' ng-click="changeTab('sftab')"><a href="#">Show Features</a></li>
+      </ul>
+    </div>
+    </div>
+    <!-- feature list -->
+    <div id='feature-list' class='row' ng-show='showFeatures'>
+      <div class='col-sm-8 col-sm-offset-3'>
+        <div class='well'>
+        <legend>Featuring...</legend>
+        <ol >
+          <li>Users!</li>
+          <li>CRUD operations!</li>
+          <li>Bootstrap 3 for stylish good looks!</li>
+          <li>Angular.js for smooth single-page AJAX requests!</li>
+          <li>RESTful API via Node.js with Express!</li>
+          <li>Mongo.db via mongolab.com!</li>
+        </ol>
+        </div>
+      </div>
     </div>
     <!-- user creation form -->
-    <div id='user-form' class='row'>
-      <div class='col-sm-8 col-sm-offset-2 text-center'>
-        <form class='well'>
+    <div id='user-form' class='row' ng-show='showCreate'>
+      <div class='col-sm-8 col-sm-offset-3 text-center'>
+        <form class='well css-form' novalidate name='createform'>
           <legend>Enter info to create a new user!</legend>
           <div class='form-group'>
-            <input type='text' class='form-control input-lg text-center' placeholder='email@example.com' ng-model='formData.email'>
-            <input type='text' class='form-control input-lg text-center' placeholder='first name' ng-model='formData.first_name'>
+            <input type='email' name='uEmail' class='form-control input-lg text-center' placeholder='email@example.com' ng-model='formData.email' >
+            <div ng-show='createform.$submitted'>
+              <div ng-show='createform.uEmail.$error.email'>Not a valid email.</div>
+            </div>
+            <input type='text' name='uFname' class='form-control input-lg text-center' placeholder='first name' ng-model='formData.first_name' required="">
+            <div ng-show='createform.$submitted'>
+              <div ng-show='createform.uFname.$error.required'>First name is required.</div>
+            </div>
             <input type='text' class='form-control input-lg text-center' placeholder='last name' ng-model='formData.last_name'>
           </div>
           <button type='submit' class='btn btn-primary btn-block' ng-click='createUser()'>Add</button>
         </form>
       </div>
     </div>
-    <div class='container well text-center'>
-    
-      <legend>Current users</legend>
-      
-        
 
+    <div class='container well text-center' ng-show='showList'>
+      <legend>Current users</legend>        
         <!-- loop over all users in scope -->
-        <div class='checkbox' ng-repeat='user in users'>
-          <div id='users-list' class='row'>
-            <div class='col-sm-3 col-sm-offset-3'>
+        <div class='crud' ng-repeat='user in users'>
+          <div class='row users-list'>
+            <div class='col-sm-4 col-sm-offset-2 text-left'>
               <p>{{user.first_name}} {{user.last_name}} ({{user.email}})</p>
+              <form id='{{user._id}}' class='user-update' ng-show='showEdit'>
+                <input type='email' class='form-control input-sm text-center' value='{{user.email}}' ng-model='updateData.email'>
+                <input type='text' class='form-control input-sm text-center' value='{{user.first_name}}' ng-model='updateData.first_name'>
+                <input type='text' class='form-control input-sm text-center' value='{{user.last_name}}' ng-model='updateData.last_name'>
+                <button type='submit' class='btn btn-primary btn-sm btn-block' ng-click='updateUser(user._id)'>Save</button>
+              </form>
             </div>
-            <div class='col-sm-3 col-sm-offset-1'>
-              <input type='checkbox' ng-click='deleteUser(user._id)'>Delete?
+            <div class='col-sm-6 text-left'>
+              <ul class='nav nav-pills text-center' role='tablist'>
+                <li role='presentation'><a ng-click='editUser(user); showEdit = !showEdit' href="javascript:void(0);" ng-blur='showEdit = false'>Update</a></li>
+                <li role='presentation'><a ng-click='showdel = !showdel' href="javascript:void(0);">Delete</a>
+				  <span ng-show='showdel'>you sure?
+              	    <button class='btn btn-primary btn-sm' ng-click='deleteUser(user._id)'>yes</button>
+              	    <button class='btn btn-default btn-sm' ng-click='showdel = !showdel'>no</button>
+                  </span>
+                </li>
+              </ul>
+              
             </div>
           </div>  
         </div>
-      </div>
     </div>
+  </div>
     
   </div>
+  
 </body>
 </html>
