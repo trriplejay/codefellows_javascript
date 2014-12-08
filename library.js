@@ -46,8 +46,14 @@ function Shelf(){
 	};
 
 	this.list_books = function() {
-		for (var i =0; i< this.books.length; i++) {
-			console.log(this.books[i].author + ": " + "'" + this.books[i].title + "'");
+		var shelflife = this.books.length;
+		if (shelflife > 0) {
+			for (var i =0; i< this.books.length; i++) {
+				console.log(this.books[i].author + ": " + "'" + this.books[i].title + "'");
+			};
+		}
+		else {
+			console.log("this shelf contains 0 books.");
 		};
 	}
 
@@ -148,13 +154,13 @@ myLibrary.add_shelf(shelf1);
 console.log("there is: " + myLibrary.shelves.length + " shelf in the library");
 console.log("the library contains the following books:");
 myLibrary.print_all_books();
-console.log("the library contains: "+myLibrary.get_num_books() + " books.");
+console.log("the library contains: "+myLibrary.get_num_books() + " books. (should be 2)");
 console.log("now add the second shelf to the library");
 myLibrary.add_shelf(shelf2);
-console.log("there are: " + myLibrary.shelves.length + " shelves in the library");
+console.log("there are: " + myLibrary.shelves.length + " shelves in the library. (should be 2)");
 console.log("the library contains the following books:");
 myLibrary.print_all_books();
-console.log("the library contains: "+myLibrary.get_num_books() + " books.");
+console.log("the library contains: "+myLibrary.get_num_books() + " books. (should be 4");
 console.log('get all books from the library and return them in an array');
 var myBookList = myLibrary.get_all_books();
 console.log('print the array');
