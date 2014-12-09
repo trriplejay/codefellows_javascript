@@ -40,8 +40,6 @@ myUsers.controller('mainController', ['$scope', '$http', function($scope, $http)
 				.error(function(data) {
 					console.log('Create error: ' + data);
 				});
-
-
 		};
 
 	};
@@ -71,7 +69,7 @@ myUsers.controller('mainController', ['$scope', '$http', function($scope, $http)
 				console.log('Update error: ' + data);
 			});
 	};
-	$scope.editUser = function(user, userid) {
+	$scope.editUser = function(user) {
 		
 		$scope.updateData = {
 			'email' : user.email,

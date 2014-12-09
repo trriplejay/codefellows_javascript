@@ -8,12 +8,12 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
 
   <title>Codefellows Users App</title>
-
+  <link rel='icon' type='image/png' href='glyphicons-44-group.png'>
   <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
   
   <style>
   	html 			{ overflow-y:scroll; }
- 	body 			{ padding-top: 50px; }
+ 	body 			{ padding-top: 50px; background-color:#CCCCCC; }
   	.users-list		{ margin-bottom: 30px; }
   </style>
   
@@ -27,21 +27,21 @@
   <div class='container'>
 
     <div class='jumbotron text-center'>
-      <h1>MyUsers</h1>
-      <p><em>fulfill all of your CRUDdy desires...</em></p>
+      <h1>MyUsers <img src='glyphicons-44-group.png'></h1>
+      <p><em>fulfill all of your CRUD-dy desires...</em></p>
     </div>
     <div class='row'>
     <div class='col-sm-8 col-sm-offset-3 text-center'>
       <ul class="nav nav-pills text-center" role="tablist">
         <li role="presentation" ng-class='cuclass' ng-click="changeTab('cutab')"><a href="#">Create User</a></li>
-        <li role="presentation" ng-class='slclass' ng-click="changeTab('sltab')"><a href="#">Show User List <span class="badge">{{ users.length }}</span></a></li>
-        <li id='sftab' role="presentation" ng-class='sfclass' ng-click="changeTab('sftab')"><a href="#">Show Features</a></li>
+        <li role="presentation" ng-class='slclass' ng-click="changeTab('sltab')"><a href="#">User List <span class="badge">{{ users.length }}</span></a></li>
+        <li id='sftab' role="presentation" ng-class='sfclass' ng-click="changeTab('sftab')"><a href="#">Features</a></li>
       </ul>
     </div>
     </div>
     <!-- feature list -->
     <div id='feature-list' class='row' ng-show='showFeatures'>
-      <div class='col-sm-8 col-sm-offset-3'>
+      <div class='col-sm-5 col-sm-offset-3'>
         <div class='well'>
         <legend>Featuring...</legend>
         <ol >
@@ -50,14 +50,14 @@
           <li>Bootstrap 3 for stylish good looks!</li>
           <li>Angular.js for smooth single-page AJAX requests!</li>
           <li>RESTful API via Node.js with Express!</li>
-          <li>Mongo.db via mongolab.com!</li>
+          <li>Mongodb via mongolab.com!</li>
         </ol>
         </div>
       </div>
     </div>
     <!-- user creation form -->
     <div id='user-form' class='row' ng-show='showCreate'>
-      <div class='col-sm-8 col-sm-offset-3 text-center'>
+      <div class='col-sm-5 col-sm-offset-3 text-center'>
         <form class='well css-form' novalidate name='createform'>
           <legend>Enter info to create a new user!</legend>
           <div class='form-group'>
@@ -81,8 +81,8 @@
         <!-- loop over all users in scope -->
         <div class='crud' ng-repeat='user in users'>
           <div class='row users-list'>
-            <div class='col-sm-4 col-sm-offset-2 text-left'>
-              <p>{{user.first_name}} {{user.last_name}} ({{user.email}})</p>
+            <div class='col-sm-3 col-sm-offset-3 text-center'>
+              <p>{{user.first_name}} {{user.last_name}}</p><p ng-if='user.email'>({{user.email}})</p>
               <form id='{{user._id}}' class='user-update' ng-show='showEdit'>
                 <input type='email' class='form-control input-sm text-center' value='{{user.email}}' ng-model='updateData.email'>
                 <input type='text' class='form-control input-sm text-center' value='{{user.first_name}}' ng-model='updateData.first_name'>
@@ -90,9 +90,9 @@
                 <button type='submit' class='btn btn-primary btn-sm btn-block' ng-click='updateUser(user._id)'>Save</button>
               </form>
             </div>
-            <div class='col-sm-6 text-left'>
+            <div class='col-sm-4 text-center'>
               <ul class='nav nav-pills text-center' role='tablist'>
-                <li role='presentation'><a ng-click='editUser(user); showEdit = !showEdit' href="javascript:void(0);" ng-blur='showEdit = false'>Update</a></li>
+                <li role='presentation'><a ng-mousedown='editUser(user); showEdit = !showEdit' href="javascript:void(0);" ng-blur='showEdit = false'>Update</a></li>
                 <li role='presentation'><a ng-click='showdel = !showdel' href="javascript:void(0);">Delete</a>
 				  <span ng-show='showdel'>you sure?
               	    <button class='btn btn-primary btn-sm' ng-click='deleteUser(user._id)'>yes</button>

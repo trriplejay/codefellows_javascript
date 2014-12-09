@@ -14,6 +14,8 @@ var methodOverride = require('method-override');
 
 // configuration ====================================
 
+app.set('port', (process.env.PORT || 5000));
+
 // mongo hosted on mongolabs.com
 mongoose.connect('mongodb://codefellow:passw0rd@ds061370.mongolab.com:61370/codefellows');
 
@@ -121,5 +123,6 @@ app.get('*', function(req, res) {
 
 // listen (start app with node server.js) ===========================
 
-app.listen(8080);
-console.log('app listening on port 8080');
+app.listen(app.get('port'), function() {
+	console.log('app listening on port: ' + app.get('port'));
+});
